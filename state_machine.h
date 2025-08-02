@@ -28,9 +28,9 @@ extern bool auto_message_printed; //da li smo printali text u auto door modu
 typedef enum {
     STATE_HOME,
     STATE_MENU,
-    STATE_VRATA_MANUAL,
-    STATE_VRATA_AUTO_OPEN,
-    STATE_VRATA_AUTO_CLOSED,
+    STATE_DOOR_MANUAL,
+    STATE_DOOR_AUTO_OPEN,
+    STATE_DOOR_AUTO_CLOSED,
     STATE_CO2,
     STATE_LIGHT
 } GLCD_STANJE;
@@ -40,6 +40,7 @@ extern GLCD_STANJE previousState;
 
 bool touch_in_area(int x_min, int x_max, int y_min, int y_max);
 void check_state(void);
+void handle_state(void);
 void update_display(GLCD_STANJE state);
 void handle_home_display(void);
 void handle_menu_display(void);

@@ -32,6 +32,34 @@ void check_state(void) {
     }
 }
 
+void handle_state(void) {
+
+    switch (currentState) {
+        case STATE_HOME:
+            handle_home_display();
+            break;
+        case STATE_MENU:
+            handle_menu_display();
+            break;
+        case STATE_DOOR_MANUAL:
+            handle_manual_door_display();
+            break;
+        case STATE_DOOR_AUTO_OPEN:
+        case STATE_DOOR_AUTO_CLOSED:
+            handle_auto_door_display();
+            break;
+        case STATE_CO2:
+            handle_co2_display();
+            break;
+        case STATE_LIGHT:
+            handle_light_display();
+            break;
+        default:
+            handle_home_display();
+            break;
+    }
+}
+
 void update_display(GLCD_STANJE state) {
     switch (state) {
         case STATE_HOME:
@@ -46,16 +74,16 @@ void update_display(GLCD_STANJE state) {
                 serial_print_string("Dobrodosli u meni!\n\r");
             }
             break;
-        case STATE_VRATA_MANUAL:
+        case STATE_DOOR_MANUAL:
             GLCD_DisplayPictureConst(vrata_disp_manual);
             if (serijska) {
                 serial_print_string("Manuelni prikaz vrata!\n\r");
             }
             break;
-        case STATE_VRATA_AUTO_OPEN:
+        case STATE_DOOR_AUTO_OPEN:
             GLCD_DisplayPictureConst(vrata_disp_auto_open);
             break;
-        case STATE_VRATA_AUTO_CLOSED:
+        case STATE_DOOR_AUTO_CLOSED:
             GLCD_DisplayPictureConst(vrata_disp_auto_closed);
             break;
         case STATE_CO2:
@@ -92,7 +120,7 @@ void handle_menu_display(void) {
 
     if (touch_in_area(4, 27, 14, 60)) {
         touchActive = false;
-        currentState = mod_vrata ? STATE_VRATA_MANUAL : (vrata_otvorena_zatvorena ? STATE_VRATA_AUTO_OPEN : STATE_VRATA_AUTO_CLOSED);
+        currentState = mod_vrata ? STATE_DOOR_MANUAL : (vrata_otvorena_zatvorena ? STATE_DOOR_AUTO_OPEN : STATE_DOOR_AUTO_CLOSED);
         manual_message_printed = false;
         return;
     }
@@ -125,8 +153,8 @@ void handle_manual_door_display(void) {
     if (touch_in_area(6, 29, 20, 41)) {
         touchActive = false;
         currentState = vrata_otvorena_zatvorena
-                ? STATE_VRATA_AUTO_OPEN
-                : STATE_VRATA_AUTO_CLOSED;
+                ? STATE_DOOR_AUTO_OPEN
+                : STATE_DOOR_AUTO_CLOSED;
         mod_vrata = false;
         return;
     }
@@ -171,7 +199,7 @@ void handle_auto_door_display(void) {
     if (touch_in_area(6, 29, 20, 41)) {
         touchActive = false;
         mod_vrata = true;
-        currentState = STATE_VRATA_MANUAL;
+        currentState = STATE_DOOR_MANUAL;
         manual_message_printed = false;
         return;
     }
@@ -180,13 +208,13 @@ void handle_auto_door_display(void) {
         delay_ms(20);
         vrata_otvorena_zatvorena = true;
         pir_reagovao = true;
-        currentState = STATE_VRATA_AUTO_OPEN;
+        currentState = STATE_DOOR_AUTO_OPEN;
     } else if (!pir_aktiviran() && pir_reagovao) {
         close_doors();
         delay_ms(20);
         vrata_otvorena_zatvorena = false;
         pir_reagovao = false;
-        currentState = STATE_VRATA_AUTO_CLOSED;
+        currentState = STATE_DOOR_AUTO_CLOSED;
     }
 }
 

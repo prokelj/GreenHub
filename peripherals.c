@@ -17,21 +17,20 @@ void init_peripheral_pins(void) {
     LATAbits.LATA11 = 0; //pocetna vrijednost
 }
 
-void init_pins(void){
+void init_pins(void) {
     init_peripheral_pins();
     init_adc_pins();
-    init_glcd_pins();
     init_ts_pins();
+    init_glcd_pins();
 }
 
-void configure_modules(void){     
+void configure_modules(void) {
     configure_uart1();
     configure_adc();
     configure_glcd();
 }
 
 void update_lights(void) {
-
     //citamo proc 0-100%
     int proc = scale_light(fotootp);
 
@@ -41,8 +40,7 @@ void update_lights(void) {
 
     if (proc >= 40) {
         LATFbits.LATF6 = 0;
-    }
-    else{
+    } else {
         LATFbits.LATF6 = 1;
     }
 
@@ -79,18 +77,21 @@ void open_doors_manual(void) {
 }
 
 //0-100%
+
 unsigned int scale_light(unsigned int fo) {
     if (fo > 4095) fo = 4095;
     return ((unsigned long) fo * 100 + 2047) / 4095;
 }
 
 //0-100%
+
 unsigned int scale_co2(unsigned int co2) {
     if (co2 > 4095) co2 = 4095;
     return ((unsigned long) (4095 - co2) * 100 + 2047) / 4095;
 }
 
 //citamo pir
+
 bool pir_aktiviran(void) {
     bool pir = false;
 
