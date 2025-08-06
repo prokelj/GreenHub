@@ -9,7 +9,7 @@ void configure_uart1(void)
 {
     U1BRG= 0x0015;//ovim odredjujemo baudrate - na terminalu 9600
 
-    U1MODEbits.ALTIO=0;//biramo koje pinove koristimo za komunikaciju osnovne ili alternativne(RF2 i RF3 SE MORAJU PODESITI)
+    U1MODEbits.ALTIO=0;//koristimo osnovne pinove rf2 i rf3
 
     IEC0bits.U1RXIE=1;//omogucavamo rx1 interupt
 
@@ -75,5 +75,6 @@ void serial_print_string(register const char *str) //fja za ispis stringa
         str++;
     }
 }
+
 
 
