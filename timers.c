@@ -16,9 +16,9 @@ void configure_timer1(void) {
 
     T1CONbits.TON = 0;
     TMR1 = 0; // Clear the timer register
-    PR1 = TIMER1_PERIODA; // Set the period so that interrupt happens every 0.1 ms (100 µs)
+    PR1 = TIMER1_PERIODA; //0.5ms
     T1CONbits.TCS = 0; // 0 = Internal clock (FOSC/4)
-    IPC0bits.T1IP = 2; //prioritet tajmera 2 najvisi jer se najcesce desava
+    IPC0bits.T1IP = 2; //prioritet tajmera 1 najvisi jer se najcesce desava
     IFS0bits.T1IF = 0; // clear interrupt flag
     IEC0bits.T1IE = 1; // enable interrupt
     T1CONbits.TON = 1; // T1 on 
@@ -27,7 +27,7 @@ void configure_timer1(void) {
 void __attribute__((__interrupt__, __auto_psv__)) _T1Interrupt(void) {
     TMR1 = 0; // Reset the timer
     brojac_pola_ms++; // Increment 0.5 ms counter
-    IFS0bits.T1IF = 0; // Clear the interrupt flag for Timer 1
+    IFS0bits.T1IF = 0; // Clear the interrupt flag
 }
 
 void delay_pola_ms(unsigned int br_pola_ms) {
@@ -97,4 +97,5 @@ void __attribute__((__interrupt__, __auto_psv__)) _T3Interrupt(void) {
     }
 
     IFS0bits.T3IF = 0; //clearujemo flag
+
 }
