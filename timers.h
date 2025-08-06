@@ -15,8 +15,7 @@ void configure_timers(void);
 //-----------------------------------------------------------------------------------------------
 
 
-#define TIMER1_PERIODA 1665 /*  Fosc = 3.33MHz
-					          1/Fosc = 0.3us !!!, 0.3us *1665  = 0.5ms  */
+#define TIMER1_PERIODA 1665 /*  Fosc = 3.33MHz 1/Fosc = 0.3us !!!, 0.3us *1665  = 0.5ms  */
 
 void configure_timer1(void);
 void delay_pola_ms(unsigned int br_pola_ms);
@@ -44,4 +43,5 @@ void configure_timer3(void);
 void __attribute__((__interrupt__,__auto_psv__)) _T3Interrupt(void);
 
 #endif	/* TIMERS_H */
+
 
