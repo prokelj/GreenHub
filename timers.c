@@ -18,7 +18,7 @@ void configure_timer1(void) {
     TMR1 = 0; // Clear the timer register
     PR1 = TIMER1_PERIODA; //0.5ms
     T1CONbits.TCS = 0; // 0 = Internal clock (FOSC/4)
-    IPC0bits.T1IP = 2; //prioritet tajmera 1 najvisi jer se najcesce desava
+    IPC0bits.T1IP = 1; //prioritet tajmera 1 
     IFS0bits.T1IF = 0; // clear interrupt flag
     IEC0bits.T1IE = 1; // enable interrupt
     T1CONbits.TON = 1; // T1 on 
@@ -50,7 +50,7 @@ void configure_timer2(void) {
     TMR2 = 0; // Clear the timer register
     PR2 = TIMER2_PERIODA;
     T2CONbits.TCS = 0; // 0 = Internal clock (FOSC/4)
-    IPC1bits.T2IP = 2; //prioritet
+    IPC1bits.T2IP = 0; //prioritet
     T2CONbits.TCKPS = 0b10; //prescaler 64
     IFS0bits.T2IF = 0; // clear interrupt flag
     IEC0bits.T2IE = 1; // enable interrupt
@@ -75,7 +75,7 @@ void configure_timer3(void) {
     TMR3 = 0; // Clear the timer register
     PR3 = TIMER3_PERIODA;
     T3CONbits.TCS = 0; // 0 = Internal clock (FOSC/4)
-    IPC1bits.T3IP = 1; //prioritet tajmera 3
+    IPC1bits.T3IP = 2; //prioritet tajmera 3
     IFS0bits.T3IF = 0; // clear interrupt flag
     IEC0bits.T3IE = 1; // enable interrupt
     T3CONbits.TON = 1; // T3 on 
@@ -99,3 +99,4 @@ void __attribute__((__interrupt__, __auto_psv__)) _T3Interrupt(void) {
     IFS0bits.T3IF = 0; //clearujemo flag
 
 }
+
